@@ -10,10 +10,12 @@ class TestMemozo(unittest.TestCase):
         base_path = './tests/resources/'
         m = Memozo(base_path)
 
-        @m
+        @m(name='call_test')
         def create_dummy_data():
+            """create dummy data"""
             return dummy_data
 
+        # testing save and load
         dummy_data = ['This\n', 'is\n', 'a\n', 'test.\n']
         path = os.path.join(base_path, 'test')
         if os.path.exists(path):
@@ -25,3 +27,6 @@ class TestMemozo(unittest.TestCase):
         dummy_data += ['extra line\n']
         data = create_dummy_data()
         self.assertFalse(data == dummy_data)
+
+        # testing doc string
+        self.assertTrue(create_dummy_data.__doc__ == "create dummy data")
