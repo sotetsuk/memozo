@@ -12,7 +12,9 @@ class Memozo(object):
     def __call__(self, name=None):
 
         def wrapper(func):
-            file_path = os.path.join(self.base_path, 'test')
+            _name = func.__name__ if name is None else name
+
+            file_path = os.path.join(self.base_path, _name)
 
             @functools.wraps(func)
             def _wrapper(*args, **kwargs):

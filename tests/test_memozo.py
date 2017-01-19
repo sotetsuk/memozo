@@ -6,18 +6,20 @@ from memozo import Memozo
 
 class TestMemozo(unittest.TestCase):
 
-    def test_call(self):
-        base_path = './tests/resources/'
-        m = Memozo(base_path)
+    def setUp(self):
+        self.base_path = './tests/resources/'
+        self.m = Memozo(self.base_path)
 
-        @m(name='call_test')
+    def test_call(self):
+        dummy_data = ['This\n', 'is\n', 'a\n', 'test.\n']
+
+        @self.m()
         def create_dummy_data():
             """create dummy data"""
             return dummy_data
 
         # testing save and load
-        dummy_data = ['This\n', 'is\n', 'a\n', 'test.\n']
-        path = os.path.join(base_path, 'test')
+        path = os.path.join(self.base_path, 'create_dummy_data')
         if os.path.exists(path):
             os.remove(path)
         self.assertFalse(os.path.exists(path))
@@ -27,6 +29,14 @@ class TestMemozo(unittest.TestCase):
         dummy_data += ['extra line\n']
         data = create_dummy_data()
         self.assertFalse(data == dummy_data)
+
+    def test_doc_string(self):
+        dummy_data = ['This\n', 'is\n', 'a\n', 'test.\n']
+
+        @self.m(name='call_test')
+        def create_dummy_data():
+            """create dummy data"""
+            return dummy_data
 
         # testing doc string
         self.assertTrue(create_dummy_data.__doc__ == "create dummy data")
