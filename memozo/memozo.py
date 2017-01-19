@@ -9,21 +9,27 @@ class Memozo(object):
     def __init__(self, path='./'):
         self.base_path = path
 
-    def __call__(self, func):
-        file_path = os.path.join(self.base_path, 'test')
+    def __call__(self, name=None):
 
-        @functools.wraps(func)
-        def wrapper(*args, **kwargs):
-            if os.path.exists(file_path):
-                with open(file_path, 'r') as f:
-                    obj = f.readlines()
+        def wrapper(func):
+            _name = func.__name__ if name is None else name
+
+            file_path = os.path.join(self.base_path, _name)
+
+            @functools.wraps(func)
+            def _wrapper(*args, **kwargs):
+                if os.path.exists(file_path):
+                    with open(file_path, 'r') as f:
+                        obj = f.readlines()
+                    return obj
+
+                obj = func(*args, **kwargs)
+
+                with open(file_path, 'w') as f:
+                    f.writelines(obj)
+
                 return obj
 
-            obj = func(*args, **kwargs)
-
-            with open(file_path, 'w') as f:
-                f.writelines(obj)
-
-            return obj
+            return _wrapper
 
         return wrapper
