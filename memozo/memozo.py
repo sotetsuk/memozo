@@ -11,6 +11,12 @@ class Memozo(object):
     def __init__(self, path='./'):
         self.base_path = path
 
+        memozo_file = os.path.join(self.base_path, utils.MEMOZO_FILE_NAME)
+        if not os.path.exists(memozo_file):
+            with codecs.open(memozo_file, 'w', encoding=utils.ENCODING) as f:
+                f.write('datetime\thash\tfile name\tfunction name\tparameters\n')
+                f.write('--------\t----\t---------\t-------------\t----------\n')
+
     def __call__(self, name=None, ext='file'):
 
         def wrapper(func):
