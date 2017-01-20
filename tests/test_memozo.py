@@ -1,6 +1,7 @@
 import os
 import unittest
 import codecs
+import pickle
 
 from memozo import Memozo, utils
 
@@ -109,3 +110,31 @@ class TestMemozoGenerator(unittest.TestCase):
         with codecs.open(file_path, 'r', 'utf-8') as f:
             for line in f:
                 self.assertTrue(int(line.strip('\n')) % 3 == 0)
+
+
+class TestMemozoPickle(unittest.TestCase):
+
+    def test_no_cache_output(self):
+        base_path = './tests/resources'
+        m = Memozo(base_path)
+
+        @m.pickle('pickle_test', protocol=pickle.HIGHEST_PROTOCOL)
+        def pickle_test_func():
+            return {'a': 3, 'b': 5}
+
+        expected = {'a': 3, 'b': 5}
+        actual = pickle_test_func()
+        self.assertTrue(actual == expected)
+
+        sha1 = utils.get_hash('pickle_test', 'pickle_test_func', '')
+        file_path = os.path.join(base_path, "{}_{}.{}".format('pickle_test', sha1, 'pickle'))
+        os.remove(file_path)
+
+    def test_data_cached_collectly(self):
+        # TODO(sotetsuk): WRITE THIS TEST
+        pass
+
+    def test_load_data_from_cache(self):
+        # TODO(sotetsuk): WRITE THIS TEST
+        pass
+

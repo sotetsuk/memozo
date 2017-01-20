@@ -76,3 +76,32 @@ class Memozo(object):
             return _wrapper
 
         return wrapper
+
+    def pickle(self, name=None, ext='pickle', protocol=None):
+
+        def wrapper(func):
+            _name = func.__name__ if name is None else name
+
+            @functools.wraps(func)
+            def _wrapper(*args, **kwargs):
+                args = utils.get_bound_args(func, *args, **kwargs)
+                args_str = utils.get_args_str(args)
+                sha1 = utils.get_hash(_name, func.__name__, args_str)
+                file_path = os.path.join(self.base_path, "{}_{}.{}".format(_name, sha1, ext))
+
+                if utils.log_exisits(self.base_path, _name, func.__name__, args_str) and os.path.exists(file_path):
+                    with open(file_path, 'rb') as f:
+                        obj = pickle.load(f)
+                    return obj
+
+                obj = func(*args, **kwargs)
+
+                with open(file_path, 'wb') as f:
+                    pickle.dump(obj, f, protocol=protocol)
+                utils.write(self.base_path, _name, func.__name__, args_str)
+
+                return obj
+
+            return _wrapper
+
+        return wrapper
