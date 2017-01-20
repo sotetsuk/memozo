@@ -1,6 +1,5 @@
 import os
 import functools
-import inspect
 import codecs
 import pickle
 
