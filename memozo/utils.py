@@ -7,6 +7,7 @@ from datetime import datetime
 
 MEMOZO_FILE_NAME = '.memozo'
 ENCODING = 'utf-8'
+N_DIGITS = 7
 
 
 def get_memozo_filename(base_path):
@@ -22,7 +23,7 @@ def get_args_str(args):
 def get_hash(name, func_name, args_str):
     source = '/'.join(["memozo", name, func_name, args_str])
     sha1 = hashlib.sha1(source.encode('utf-8')).hexdigest()
-    return sha1
+    return sha1[:N_DIGITS]
 
 
 def write(base_path, name, func_name, args_str):
