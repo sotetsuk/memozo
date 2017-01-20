@@ -4,7 +4,7 @@ from memozo import Memozo
 m = Memozo('./data')
 
 
-@m.generator(name='filtered_sentences', ext='txt')
+@m.generator(file_name='filtered_sentences', ext='txt')
 def filter_data(keyword):
     path_to_raw_data = './data/sentences.txt'
     with codecs.open(path_to_raw_data, 'r', 'utf-8') as f:
@@ -14,7 +14,7 @@ def filter_data(keyword):
 
 if __name__ == '__main__':
     # This generator will filter sentences of original data ('./data/sentences.txt')
-    # and save filtered sentences to './data/filtered_sentences_.txt'.
+    # and save filtered sentences to './data/filtered_sentences_1fec01f.txt'.
     gen_pen_sentences1 = filter_data('pen')
     for line in gen_pen_sentences1:
         print(line, end='')

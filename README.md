@@ -7,10 +7,9 @@
 Python decorator for memoization to disk.
 
 ## Motivating example
-Imagene that now you have tremendous number of sentences and you have to filter the sentences which includes the given keyword.
-You will create a filtering generator which take a argument as keyword and,
-if you will reuse the filtered sentences again,
-you may want to **cache** the filtered sentences to disk.
+Imagene that now you have tremendous number of sentences and you have to filter the sentences which includes a given keyword.
+You will create a filtering generator which take a argument as keyword,
+and you may want to **cache** the filtered sentences to disk if you plan to reuse the filtered sentences again,
 
 **memozo** greatly helps such a situation !
 
@@ -21,7 +20,7 @@ from memozo import Memozo
 m = Memozo('./data')
 
 
-@m.generator(name='filtered_sentences', ext='txt')
+@m.generator(file_name='filtered_sentences', ext='txt')
 def filter_data(keyword):
     path_to_raw_data = './data/sentences.txt'
     with codecs.open(path_to_raw_data, 'r', 'utf-8') as f:
@@ -31,7 +30,7 @@ def filter_data(keyword):
 
 if __name__ == '__main__':
     # This generator will filter sentences of original data ('./data/sentences.txt')
-    # and save filtered sentences to './data/filtered_sentences_.txt'.
+    # and save filtered sentences to './data/filtered_sentences_1fec01f.txt'.
     gen_pen_sentences1 = filter_data('pen')
     for line in gen_pen_sentences1:
         print(line, end='')
@@ -49,15 +48,15 @@ if __name__ == '__main__':
 ```
 
 ## How it works
-**Memozo** decorator will create a ```.memozo``` log file at the path determined by ```Memozo``` constructor and, 
-when the created data is successflly cached, the log is added to ```.memozo``` file:
+**Memozo** decorator will create a ```.memozo``` log file at the path determined by ```Memozo``` constructor.
+When the created data is successflly cached, the log is added to ```.memozo``` file:
 
 ```
 2017-01-20 18:32:36	1fec01f	filtered_sentences	filter_data	'keyword': 'pen'
 ```
 
 where each column indicates (```datetime```, ```hash```, ```file name```, ```function name```, ```parameters```).
-The log includes sha1 hash created by the triplet of (```name``` (if not specified, equal to function name), ```function name```, ```parameters```).
+The log includes sha1 hash created by the triplet of (```file name``` (if not specified, equal to function name), ```function name```, ```parameters```).
 The hash is also used in cached file name (```{file name}_{hash}.{extension}```).
 Memozo will reuse the cashed data if **the same hash exists in ```.memozo``` log file and actually the cached file exists**.
 That is, if (at least) one of the (```file name```, ```function name```, ```parameters```) is changed, cached files are not used.
