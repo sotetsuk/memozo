@@ -98,6 +98,7 @@ class Memozo(object):
                         for e in gen:
                             f.write(e)
                             yield e
+                    utils.write(self.base_path, _name, func.__name__, args_str)
 
                 return generator_with_cache(gen, file_path)
 
