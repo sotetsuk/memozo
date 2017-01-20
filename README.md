@@ -4,7 +4,7 @@
 [![LICENCE](https://img.shields.io/github/license/sotetsuk/memozo.svg)](https://github.com/sotetsuk/memozo)
 
 # memozo
-Python libraries to momoize objects to desk.
+Python decorator for memoization to disk.
 
 ## Motivating example
 Imagene that now you have tremendous number of sentences and you have to filter the sentences which includes the given keyword.
