@@ -75,6 +75,33 @@ class TestMemozoCall(unittest.TestCase):
         os.remove(file_path)
 
 
+class TestMemozoCodecs(unittest.TestCase):
+
+    def test_no_cache_output(self):
+        base_path = './tests/resources'
+        m = Memozo(base_path)
+
+        @m.codecs('codecs_test', encoding='utf-8')
+        def codecs_test_func():
+            return ['This\n', 'is\n', 'test.\n']
+
+        expected = ['This\n', 'is\n', 'test.\n']
+        actual = codecs_test_func()
+        self.assertEqual(expected, actual)
+
+        sha1 = utils.get_hash('codecs_test', 'codecs_test_func', '')
+        file_path = os.path.join(base_path, "{}_{}.{}".format('codecs_test', sha1, 'file'))
+        os.remove(file_path)
+
+    def test_data_has_cached_collectly(self):
+        # TODO(sotetsuk): WRITE THIS TEST
+        pass
+
+    def test_load_data_from_cache(self):
+        # TODO(sotetsuk): WRITE THIS TEST
+        pass
+
+
 class TestMemozoGenerator(unittest.TestCase):
 
     def test_no_cache_output(self):
