@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='memozo',
     version="0.1.2",
-    description='Memotize objects to desk easily',
+    description='Python decorator for memoization to disk',
     author='sotetsuk',
     url='https://github.com/sotetsuk/memozo',
     author_email='sotetsu.koyamada@gmail.com',
