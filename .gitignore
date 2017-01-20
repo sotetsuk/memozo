@@ -1,5 +1,7 @@
 tests/resources/*
 !tests/resources/.gitkeep
+example/data/*
+!example/data/sentences.txt
 
 # idea
 *.iml
