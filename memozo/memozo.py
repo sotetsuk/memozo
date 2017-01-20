@@ -1,6 +1,5 @@
 import os
 import functools
-import inspect
 import codecs
 import pickle
 
@@ -19,8 +18,8 @@ class Memozo(object):
 
             @functools.wraps(func)
             def _wrapper(*args, **kwargs):
-                args = utils.get_bound_args(func, *args, **kwargs)
-                args_str = utils.get_args_str(args)
+                bound_args = utils.get_bound_args(func, *args, **kwargs)
+                args_str = utils.get_args_str(bound_args)
                 sha1 = utils.get_hash(_name, func.__name__, args_str)
                 file_path = os.path.join(self.base_path, "{}_{}.{}".format(_name, sha1, ext))
 
@@ -48,8 +47,8 @@ class Memozo(object):
 
             @functools.wraps(func)
             def _wrapper(*args, **kwargs):
-                args = utils.get_bound_args(func, *args, **kwargs)
-                args_str = utils.get_args_str(args)
+                bound_args = utils.get_bound_args(func, *args, **kwargs)
+                args_str = utils.get_args_str(bound_args)
                 sha1 = utils.get_hash(_name, func.__name__, args_str)
                 file_path = os.path.join(self.base_path, "{}_{}.{}".format(_name, sha1, ext))
 
@@ -78,8 +77,8 @@ class Memozo(object):
             @functools.wraps(func)
             def _wrapper(*args, **kwargs):
                 # get cached data path
-                args = utils.get_bound_args(func, *args, **kwargs)
-                args_str = utils.get_args_str(args)
+                bound_args = utils.get_bound_args(func, *args, **kwargs)
+                args_str = utils.get_args_str(bound_args)
                 sha1 = utils.get_hash(_name, func.__name__, args_str)
                 file_path = os.path.join(self.base_path, "{}_{}.{}".format(_name, sha1, ext))
 
@@ -113,8 +112,8 @@ class Memozo(object):
 
             @functools.wraps(func)
             def _wrapper(*args, **kwargs):
-                args = utils.get_bound_args(func, *args, **kwargs)
-                args_str = utils.get_args_str(args)
+                bound_args = utils.get_bound_args(func, *args, **kwargs)
+                args_str = utils.get_args_str(bound_args)
                 sha1 = utils.get_hash(_name, func.__name__, args_str)
                 file_path = os.path.join(self.base_path, "{}_{}.{}".format(_name, sha1, ext))
 
