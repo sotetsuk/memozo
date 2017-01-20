@@ -8,8 +8,8 @@ Python decorator for memoization to disk.
 
 ## Motivating example
 Imagene that now you have tremendous number of sentences and you have to filter the sentences which includes a given keyword.
-You will create a filtering generator which take a argument as keyword,
-and you may want to **cache** the filtered sentences to disk if you plan to reuse the filtered sentences again,
+You will create a filtering generator which take an argument as keyword,
+and you may want to **cache** the filtered sentences to disk if you plan to reuse the filtered sentences again.
 
 **memozo** greatly helps such a situation !
 
