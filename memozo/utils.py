@@ -38,6 +38,9 @@ def log_exisits(base_path, name, func_name, args_str):
     memozo_file = get_memozo_filename(base_path)
     target_sha1 = get_hash(name, func_name, args_str)
 
+    if not os.path.exists(memozo_file):
+        return False
+
     with codecs.open(memozo_file, 'r', ENCODING) as f:
         for line in f:
             time, sha1, name, func_name, args_str = line.strip('\n').split('\t')
