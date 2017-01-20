@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='memozo',
-    version="0.1.1",
+    version="0.1.2",
     description='Memotize objects to desk easily',
     author='sotetsuk',
     url='https://github.com/sotetsuk/memozo',
