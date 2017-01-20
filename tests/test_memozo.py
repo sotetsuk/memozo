@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from memozo import Memozo
+from memozo import Memozo, utils
 
 
 class TestMemozoCall(unittest.TestCase):
@@ -48,3 +48,20 @@ class TestMemozoCall(unittest.TestCase):
             return self.dummy_data
 
         self.assertTrue(os.path.exists(os.path.join(self.base_path, name)))
+
+    def test_args(self):
+        name = 'test_args'
+
+        @self.m(name=name)
+        def create_dummy_data(param):
+            """create dummy data"""
+            return self.dummy_data
+
+        args_str = utils.get_args_str({'param': 3})
+        file_path = os.path.join(self.base_path, name + '_' +
+                                 utils.get_hash(name, 'create_dummy_data', args_str) + '.file')
+        self.assertFalse(os.path.exists(file_path))
+        create_dummy_data(3)
+        self.assertTrue(os.path.exists(file_path))
+
+        os.remove(file_path)
