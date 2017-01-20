@@ -109,3 +109,9 @@ class TestMemozoGenerator(unittest.TestCase):
         with codecs.open(file_path, 'r', 'utf-8') as f:
             for line in f:
                 self.assertTrue(int(line.strip('\n')) % 3 == 0)
+
+        os.remove(file_path)
+
+    def test_load_data_from_cache(self):
+        # TODO(sotetsuk): WRITE THIS TEST
+        pass
