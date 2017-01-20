@@ -88,7 +88,7 @@ class Memozo(object):
                         with codecs.open(file_path, 'r', utils.ENCODING) as f:
                             for line in f:
                                 yield line
-                    return gen_cached_data
+                    return gen_cached_data()
 
                 gen = func(*args, **kwargs)
 
