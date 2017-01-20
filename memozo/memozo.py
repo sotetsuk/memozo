@@ -24,7 +24,7 @@ class Memozo(object):
                 sha1 = utils.get_hash(_name, func.__name__, args_str)
                 file_path = os.path.join(self.base_path, "{}_{}.{}".format(_name, sha1, ext))
 
-                if os.path.exists(file_path):
+                if utils.log_exisits(self.base_path, _name, func.__name__, args_str) and os.path.exists(file_path):
                     with open(file_path, 'r') as f:
                         obj = f.readlines()
                     return obj
