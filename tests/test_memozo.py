@@ -111,6 +111,12 @@ class TestMemozoGenerator(unittest.TestCase):
             for line in f:
                 self.assertTrue(int(line.strip('\n')) % 3 == 0)
 
+        os.remove(file_path)
+
+    def test_load_data_from_cache(self):
+        # TODO(sotetsuk): WRITE THIS TEST
+        pass
+
 
 class TestMemozoPickle(unittest.TestCase):
 
@@ -137,4 +143,3 @@ class TestMemozoPickle(unittest.TestCase):
     def test_load_data_from_cache(self):
         # TODO(sotetsuk): WRITE THIS TEST
         pass
-
