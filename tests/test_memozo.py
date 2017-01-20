@@ -1,5 +1,6 @@
 import os
 import unittest
+import codecs
 
 from memozo import Memozo, utils
 
@@ -71,3 +72,40 @@ class TestMemozoCall(unittest.TestCase):
         self.assertTrue(os.path.exists(file_path))
 
         os.remove(file_path)
+
+
+class TestMemozoGenerator(unittest.TestCase):
+
+    def test_no_cache_output(self):
+        base_path = './tests/resources'
+        m = Memozo(base_path)
+
+        @m.generator('gen_test')
+        def gen_test_func():
+            for i in range(10):
+                if i % 3 == 0:
+                    yield "{}\n".format(i)
+
+        gen = gen_test_func()
+        for i in gen:
+            self.assertTrue(int(i.strip('\n')) % 3 == 0)
+
+    def test_data_cached_collectly(self):
+        base_path = './tests/resources'
+        m = Memozo(base_path)
+        sha1 = utils.get_hash('gen_test', 'gen_test_func', '')
+        file_path = os.path.join(base_path, "{}_{}.{}".format('gen_test', sha1, 'file'))
+
+        @m.generator('gen_test')
+        def gen_test_func():
+            for i in range(10):
+                if i % 3 == 0:
+                    yield "{}\n".format(i)
+
+        gen1 = gen_test_func()
+        for _ in gen1:
+            continue
+
+        with codecs.open(file_path, 'r', 'utf-8') as f:
+            for line in f:
+                self.assertTrue(int(line.strip('\n')) % 3 == 0)
