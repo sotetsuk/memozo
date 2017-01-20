@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from memozo import Memozo
+from memozo import Memozo, utils
 
 
 class TestMemozoCall(unittest.TestCase):
@@ -19,16 +19,17 @@ class TestMemozoCall(unittest.TestCase):
             return self.dummy_data
 
         # testing save and load
-        path = os.path.join(self.base_path, 'create_dummy_data')
-        if os.path.exists(path):
-            os.remove(path)
-        self.assertFalse(os.path.exists(path))
+        file_path = os.path.join(self.base_path, 'create_dummy_data_' +
+                                 utils.get_hash('create_dummy_data', 'create_dummy_data', '') + '.file')
+        self.assertFalse(os.path.exists(file_path))
         data = create_dummy_data()
         self.assertTrue(data == self.dummy_data)
-        self.assertTrue(os.path.exists(path))
+        self.assertTrue(os.path.exists(file_path))
         self.dummy_data += ['extra line\n']
         data = create_dummy_data()
         self.assertFalse(data == self.dummy_data)
+
+        os.remove(file_path)
 
     def test_doc_string(self):
         @self.m()
@@ -47,4 +48,26 @@ class TestMemozoCall(unittest.TestCase):
             """create dummy data"""
             return self.dummy_data
 
-        self.assertTrue(os.path.exists(os.path.join(self.base_path, name)))
+        create_dummy_data()
+        file_path = os.path.join(self.base_path, 'call_test_' +
+                                 utils.get_hash('call_test', 'create_dummy_data', '') + '.file')
+        self.assertTrue(os.path.exists(file_path))
+
+        os.remove(file_path)
+
+    def test_args(self):
+        name = 'test_args'
+
+        @self.m(name=name)
+        def create_dummy_data(param):
+            """create dummy data"""
+            return self.dummy_data
+
+        args_str = utils.get_args_str({'param': 3})
+        file_path = os.path.join(self.base_path, name + '_' +
+                                 utils.get_hash(name, 'create_dummy_data', args_str) + '.file')
+        self.assertFalse(os.path.exists(file_path))
+        create_dummy_data(3)
+        self.assertTrue(os.path.exists(file_path))
+
+        os.remove(file_path)
