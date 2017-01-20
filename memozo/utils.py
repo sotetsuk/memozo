@@ -34,7 +34,7 @@ def write(base_path, name, func_name, args_str):
         f.write('{}\t{}\t{}\t{}\t{}\n'.format(time, sha1, name, func_name, args_str))
 
 
-def exists(base_path, name, func_name, args_str):
+def log_exisits(base_path, name, func_name, args_str):
     memozo_file = get_memozo_filename(base_path)
     target_sha1 = get_hash(name, func_name, args_str)
 

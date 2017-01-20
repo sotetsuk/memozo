@@ -47,7 +47,7 @@ class TestUtils(unittest.TestCase):
 
         os.remove(self.memozo_path)
 
-    def test_exists(self):
+    def test_log_exists(self):
         name = "test_exists"
         func_name = "test_func"
 
@@ -55,8 +55,8 @@ class TestUtils(unittest.TestCase):
         args2 = utils.get_args_str({'a': '3', 'b': '4', 'c': '5'})
 
         utils.write(self.base_path, name, func_name, args1)
-        self.assertTrue(utils.exists(self.base_path, name, func_name, args1))
-        self.assertFalse(utils.exists(self.base_path, name, func_name, args2))
+        self.assertTrue(utils.log_exisits(self.base_path, name, func_name, args1))
+        self.assertFalse(utils.log_exisits(self.base_path, name, func_name, args2))
 
         os.remove(self.memozo_path)
 
