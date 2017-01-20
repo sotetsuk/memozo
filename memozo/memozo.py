@@ -33,6 +33,7 @@ class Memozo(object):
 
                 with open(file_path, 'w') as f:
                     f.writelines(obj)
+                utils.write(self.base_path, _name, func.__name__, args_str)
 
                 return obj
 
