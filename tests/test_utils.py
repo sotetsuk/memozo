@@ -1,5 +1,6 @@
 import os
 import unittest
+import inspect
 
 from memozo import utils
 
@@ -58,3 +59,16 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(utils.exists(self.base_path, name, func_name, args2))
 
         os.remove(self.memozo_path)
+
+    def test_get_bound_args(self):
+
+        def func(a, b, c=3):
+            return a + b + c
+
+        expected = {'a': 3, 'b': 4, 'c': 5}
+
+        args = (3, 4)
+        kwargs = {'c': 5}
+        actual = utils.get_bound_args(func, *args, **kwargs)
+
+        self.assertEqual(expected, actual)

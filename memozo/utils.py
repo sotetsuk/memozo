@@ -1,5 +1,6 @@
 import os
 import codecs
+import inspect
 import hashlib
 from datetime import datetime
 
@@ -44,3 +45,11 @@ def exists(base_path, name, func_name, args_str):
                 return True
 
     return False
+
+
+def get_bound_args(func, *args, **kwargs):
+    sig = inspect.signature(func)
+    bound_args = sig.bind(*args, **kwargs)
+    args = dict(bound_args.arguments)
+
+    return args
