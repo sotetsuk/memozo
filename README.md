@@ -50,16 +50,16 @@ if __name__ == '__main__':
 
 ## How it works
 **Memozo** decorator will create a ```.memozo``` log file at the path determined by ```Memozo``` constructor and, 
-when data is successflly cached, the log is added to ```.memozo``` file:
+when the created data is successflly cached, the log is added to ```.memozo``` file:
 
 ```
 2017-01-20 15:53:43     1fec01f filtered_sentences      filter_data     'keyword': 'pen'
 ```
 
-The log includes sha1 hash created by the triplet of (```name``` (if not specified, equal to function name), ```function name```, ```parameter dictionary```).
+The log includes sha1 hash created by the triplet of (```name``` (if not specified, equal to function name), ```function name```, ```parameters```).
 The hash is also used in cached file name (```{name}_{hash}.{extension}```).
-Memozo will reuse the cashed data if **the same hash log exists in ```.memozo``` file and actually the cached file exists**.
-That is, if (at least) one of (```name```, ```function name```, ```parameters```) is changed, cached files are not used.
+Memozo will reuse the cashed data if **the same hash exists in ```.memozo``` log file and actually the cached file exists**.
+That is, if (at least) one of the (```name```, ```function name```, ```parameters```) is changed, cached files are not used.
 
 ## Installation
 
