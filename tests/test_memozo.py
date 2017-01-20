@@ -91,6 +91,10 @@ class TestMemozoGenerator(unittest.TestCase):
         for i in gen:
             self.assertTrue(int(i.strip('\n')) % 3 == 0)
 
+        sha1 = utils.get_hash('gen_test', 'gen_test_func', '')
+        file_path = os.path.join(base_path, "{}_{}.{}".format('gen_test', sha1, 'file'))
+        os.remove(file_path)
+
     def test_data_cached_collectly(self):
         base_path = './tests/resources'
         m = Memozo(base_path)
