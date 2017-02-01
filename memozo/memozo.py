@@ -75,7 +75,7 @@ class Memozo(object):
 
         return wrapper
 
-    def generator(self, name=None, ext='file'):
+    def generator(self, name=None, ext='file', line_type='str', delimiter='\t'):
 
         def wrapper(func):
             _name = func.__name__ if name is None else name
@@ -93,6 +93,8 @@ class Memozo(object):
                     def gen_cached_data():
                         with codecs.open(file_path, 'r', utils.ENCODING) as f:
                             for line in f:
+                                if line_type == 'tuple':
+                                    line = line.split(delimiter)
                                 yield line
                     return gen_cached_data()
 
@@ -102,7 +104,10 @@ class Memozo(object):
                 def generator_with_cache(gen, file_path):
                     with codecs.open(file_path, 'w', utils.ENCODING) as f:
                         for e in gen:
-                            f.write(e)
+                            if line_type == 'str':
+                                f.write(e)
+                            elif line_type == 'tuple':
+                                f.write(delimiter.join(e))
                             yield e
                     utils.write(self.base_path, _name, func.__name__, args_str)
 

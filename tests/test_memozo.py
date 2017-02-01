@@ -148,6 +148,24 @@ class TestMemozoGenerator(unittest.TestCase):
         # TODO(sotetsuk): WRITE THIS TEST
         pass
 
+    def test_no_cache_output_tuple(self):
+        base_path = './tests/resources'
+        m = Memozo(base_path)
+
+        @m.generator('gen_test', line_type='tuple')
+        def gen_test_func():
+            for i in range(10):
+                if i % 3 == 0:
+                    yield (str(i), str(i + 1))
+
+        gen = gen_test_func()
+        for i in gen:
+            self.assertTrue(int(i[0]) % 3 == 0)
+
+        sha1 = utils.get_hash('gen_test', 'gen_test_func', '')
+        file_path = os.path.join(base_path, "{}_{}.{}".format('gen_test', sha1, 'file'))
+        os.remove(file_path)
+
 
 class TestMemozoPickle(unittest.TestCase):
 
