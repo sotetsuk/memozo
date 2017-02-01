@@ -107,7 +107,7 @@ class Memozo(object):
                             if line_type == 'str':
                                 f.write(e)
                             elif line_type == 'tuple':
-                                f.write(delimiter.join(e))
+                                f.write(delimiter.join(e) + '\n')
                             yield e
                     utils.write(self.base_path, _name, func.__name__, args_str)
 
