@@ -14,3 +14,5 @@ test:
 pypi:
 		python setup.py register
 		python setup.py sdist bdist bdist_egg upload
+lint:
+		flake8 memozo/*.py
